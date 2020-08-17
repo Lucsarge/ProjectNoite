@@ -2,17 +2,19 @@
 
 
 #include "ThirdPersonAnimControl.h"
-#include "UObject/Class.h"
 #include "Engine/Blueprint.h"
 #include "Engine/World.h"
 
+//Constructor
 UThirdPersonAnimControl::UThirdPersonAnimControl()
 {
+	//Default instance variable values
 	Speed = 0.0;
 	IsInAir = false;
 	IsCrouching = false;
 	IsPunching = false;
 
+	//Retrieve class for ProjectileBlast blueprint
 	static ConstructorHelpers::FObjectFinder<UBlueprint> ItemBlueprint(TEXT("Blueprint'/Game/Meshes/ProjectileBlast.ProjectileBlast'"));
 	if (ItemBlueprint.Object) {
 		ProjectileBlastBlueprint = (UClass*)ItemBlueprint.Object->GeneratedClass;
@@ -20,29 +22,38 @@ UThirdPersonAnimControl::UThirdPersonAnimControl()
 	}
 }
 
+//Override for NativeUpdateAnimation
 void UThirdPersonAnimControl::NativeUpdateAnimation(float DeltaSeconds) {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 	AActor* OwningActor = GetOwningActor();
 
+	
+
+	//Constantly sets value of speed variable
 	if (OwningActor != nullptr) {
 		Speed = OwningActor->GetVelocity().Size();
 	}
+
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, .01f, FColor::Blue, IsInAir ? "In Air" : "Grounded");
+	}
 }
 
-void UThirdPersonAnimControl::ShowBlastBlueprint(FVector Loc, FRotator Rot, AActor* &SpawnedActorRef) {
+//
+void UThirdPersonAnimControl::SpawnProjectileBlast(FVector Loc, FRotator Rot, AActor* &SpawnedActorRef) {
 	if (ProjectileBlastBlueprint != nullptr) {
-		// I think this was crashing when it was outside of this if statement
 		AActor* OwningActor = GetOwningActor();
 		FActorSpawnParameters Params;
 		AActor* SpawnBlast = GetWorld()->SpawnActor<AActor>(ProjectileBlastBlueprint.Get(), Loc, Rot, Params);
 		SpawnedActorRef = SpawnBlast;
-		UE_LOG(LogTemp, Warning, TEXT("Projectile Blast isn't Null"));
+		UE_LOG(LogTemp, Warning, TEXT("Projectile Blast isn't Null"))
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Projectile Blast is Null"));
+		UE_LOG(LogTemp, Warning, TEXT("Projectile Blast is Null"))
 	}
 }
 
-void UThirdPersonAnimControl::ReturnActor(bool &ReturnActorVariable) {
-	ReturnActorVariable = false;
+//Stops motion of character and plays the animation before resuming
+void UThirdPersonAnimControl::TriggerPunch() {
+	
 }

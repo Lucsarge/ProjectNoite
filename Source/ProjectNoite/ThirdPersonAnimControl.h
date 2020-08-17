@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+	// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Animation/AnimInstance.h"
+#include "UObject/Class.h"
 #include "ThirdPersonAnimControl.generated.h"
 /**
  * 
@@ -33,8 +34,8 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UFUNCTION(BlueprintCallable)
-		void ShowBlastBlueprint(FVector Loc, FRotator Rot, AActor* &SpawnedActorRef);
+		void SpawnProjectileBlast(FVector Loc, FRotator Rot, AActor* &SpawnedActorRef);
 
 	UFUNCTION(BlueprintCallable)
-		void ReturnActor(bool &ReturnActorVariable);
+		void TriggerPunch();
 };

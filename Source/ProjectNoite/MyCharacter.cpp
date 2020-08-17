@@ -9,6 +9,7 @@ AMyCharacter::AMyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	maxGates = (int32) 10;
 }
 
 // Called when the game starts or when spawned
@@ -30,5 +31,11 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMyCharacter::AddSpawnGate(ASpawnGates* spawnGate) {
+	if (spawnGateCollection.Num() < maxGates) {
+		spawnGateCollection.Add(spawnGate);
+	}
 }
 

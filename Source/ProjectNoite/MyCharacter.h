@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Containers/Array.h"
+#include "SpawnGates.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
@@ -14,6 +16,15 @@ class PROJECTNOITE_API AMyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
+
+	UPROPERTY(BlueprintReadWrite)
+		TArray<ASpawnGates*> spawnGateCollection;
+
+	UFUNCTION(BlueprintCallable)
+		void AddSpawnGate(ASpawnGates* spawnGate);
+
+	UPROPERTY(BlueprintReadOnly)
+		int32 maxGates;
 
 protected:
 	// Called when the game starts or when spawned

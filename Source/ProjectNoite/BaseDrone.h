@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SphereComponent.h"
 #include "BaseDrone.generated.h"
 
 UCLASS()
@@ -14,6 +16,12 @@ class PROJECTNOITE_API ABaseDrone : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABaseDrone();
+
+	UPROPERTY(VisibleAnywhere)
+		UStaticMeshComponent* droneMesh;
+
+	UPROPERTY(VisibleAnywhere)
+		USphereComponent* sphereCollision;
 
 protected:
 	// Called when the game starts or when spawned
